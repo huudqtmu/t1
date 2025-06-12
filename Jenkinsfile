@@ -16,5 +16,18 @@ pipeline {
  		}
 	}
  
+    stage('Deploy to IIS') {
+            steps {
+                powershell '''
+               
+               
+                Import-Module WebAdministration
+                if (-not (Test-Path IIS:\\Sites\\t1)) {
+                    New-Website -Name "t1" -Port 88 -PhysicalPath "c:\\t1"
+                }
+                '''
+            }
+        } // end deploy iis
+
   } // end stages
 }//end pipeline
